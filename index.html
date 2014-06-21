@@ -20,7 +20,6 @@
           //need to change format of tweet time
           $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" + tweet.created_at + ")");
           $tweet.appendTo($('body'));
-          oldTweets.push(index);
           index += 1;
         };
       };
