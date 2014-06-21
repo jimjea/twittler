@@ -8,20 +8,31 @@
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+        //deleted the $body.html('') to stop clearing out the html
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
+      //function for showing tweets, added feature to remove old tweets
+      //need to change this to only display new tweets, not old + new tweets
+      function showTweets () { 
+        var index = 0;
+        while(index < streams.home.length){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+          //need to change format of tweet time
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" + tweet.created_at + ")");
+          $tweet.appendTo($('body'));
+          oldTweets.push(index);
+          index += 1;
+        };
+      };
+
+      //function that displays new tweets on click
+      $(".tweet-button").on("click", function () {
+        showTweets();
+      });
 
       });
 
     </script>
+    <button class="tweet-button">New Tweets</button>
   </body>
 </html>
