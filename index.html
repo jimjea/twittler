@@ -7,12 +7,24 @@
   <body>
     <script>
 
+
+      //???????************@$!@$!@$!@$@!$!@#!@#!@$!$@
+      //QUESTION FOR JANAS
+      //When asked to display new tweets, when we hit the button every second, should we only expect to see 1 tweet added to the bottom? I'm currently getting a list. And it's difficult to find a pattern of whether it's just the old 10 + 1 bc the pattern changes.
+
       $(document).ready(function(){
         //deleted the $body.html('') to stop clearing out the html
 
         //timestamp formating function
-        function timeFormat (jsDate) {
-          return (jsDate.getHours() + ":" + jsDate.getMinutes() + ":" + jsDate.getSeconds());
+        function formatTime(date) {
+          var hours = date.getHours();
+          var minutes = date.getMinutes();
+          var ampm = hours >= 12 ? 'pm' : 'am';
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+          minutes = minutes < 10 ? '0'+minutes : minutes;
+          var time = hours + ':' + minutes + ' ' + ampm;
+          return time;
         }
 
         //function for showing tweets, added feature to remove old tweets
@@ -22,8 +34,7 @@
           while(index < streams.home.length){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            //need to change format of tweet time
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" + timeFormat(tweet.created_at) + ")");
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" + formatTime(tweet.created_at) + ")");
             $tweet.appendTo($('body'));
             index += 1;
           };
