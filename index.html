@@ -7,13 +7,23 @@
   <body>
     <script>
 
-
-      //???????************@$!@$!@$!@$@!$!@#!@#!@$!$@
-      //QUESTION FOR JANAS
-      //When asked to display new tweets, when we hit the button every second, should we only expect to see 1 tweet added to the bottom? I'm currently getting a list. And it's difficult to find a pattern of whether it's just the old 10 + 1 bc the pattern changes.
-
       $(document).ready(function(){
         //deleted the $body.html('') to stop clearing out the html
+
+        //function for formatting tweets (combines the 3 parts of the tweet)
+        function formatTweet(tweet) {
+          var $wholeMsg = $('<li></li>');
+          var $user = $('<button class="user">@'+tweet.user+'</button>');
+          $user.appendTo($wholeMsg);
+          //div for the tweet message
+          var $tweet = $('<span id="message">: '+tweet.message+'</span>');
+          //seperate div for time for css purposes
+          var $time = $('<span id="time"> ('+formatTime(tweet.created_at)+')</span>');
+          //displays the username + message + timestamp
+          $time.appendTo($tweet);
+          $tweet.appendTo($wholeMsg);
+          return $wholeMsg;
+        };  
 
         //timestamp formating function
         function formatTime(date) {
@@ -27,27 +37,46 @@
           return time;
         }
 
-        //function for showing tweets, added feature to remove old tweets
-        //need to change this to only display new tweets, not old + new tweets
-        function showTweets () { 
+        //function for showing tweets
+        function showAllTweets () {
+          var allTweets = streams.home;
+          $('.tweets').html('');
           var index = 0;
-          while(index < streams.home.length){
-            var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" + formatTime(tweet.created_at) + ")");
-            $tweet.appendTo($('body'));
+          while(index < allTweets.length){
+            var toShow = formatTweet(allTweets[index]);
+            toShow.appendTo($('.tweets'));
             index += 1;
           };
         };
 
+        //function for user tweets
+        function showUserTweets (user) {
+          var userTweets = streams.users[user]
+          $('.tweets').html('');
+          var index = 0;
+          while (index < userTweets.length) {
+            var toShow = formatTweet(userTweets[index]);
+            toShow.appendTo($('.tweets'));
+            index += 1
+          };
+        };
+
         //function that displays new tweets on click
-        $(".tweet-button").on("click", function () {
-          showTweets();
+        $('.allTweet-button').on('click', function () {
+          showAllTweets();
         });
+
+        //function displays user specific tweets
+        $('.tweets').on('click', '.user', function () {
+          var userName = $(this).text().slice(1);
+          showUserTweets(userName);
+        })
+        
 
       });
 
     </script>
-    <button class="tweet-button">New Tweets</button>
+    <button class='allTweet-button'>All New Tweets</button>
+    <ul class='tweets'></ul>
   </body>
 </html>
