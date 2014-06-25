@@ -3,6 +3,7 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="style.css">    
   </head>
   <body>
     <script>
@@ -63,11 +64,13 @@
 
         //function that displays new tweets on click
         $('.allTweet-button').on('click', function () {
+          $('#user-tweet-instructions').html('');
           showAllTweets();
         });
 
         //function displays user specific tweets
         $('.tweets').on('click', '.user', function () {
+          $('#user-tweet-instructions').text("Click on the User Name Again to See More")
           var userName = $(this).text().slice(1);
           showUserTweets(userName);
         })
@@ -77,6 +80,7 @@
 
     </script>
     <button class='allTweet-button'>All New Tweets</button>
+    <span id='user-tweet-instructions'></span>
     <ul class='tweets'></ul>
   </body>
 </html>
