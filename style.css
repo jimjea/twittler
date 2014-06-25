@@ -1,3 +1,31 @@
+body {
+	font-family: arial;
+	background-color: #DCF9FF;
+}
+
 .tweets li {
 	list-style-type: none;
+}
+
+.allTweet-button {
+	width: 250px;
+	height: 80px;
+	font-size: 20px;
+	background-color: #5597D5;
+	color: #FCFEFF;
+}
+
+button:focus {
+	outline: none;
+}
+
+.allTweet-button:active {
+	background-color: #82ADD6;
+}
+
+#time {
+	font-size: 12px;
+}
+
+.user {
 }
