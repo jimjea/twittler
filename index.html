@@ -38,25 +38,19 @@
           return time;
         }
 
-        //function for showing tweets
-        function showAllTweets () {
-          var allTweets = streams.home;
-          $('.tweets').html('');
-          var index = 0;
-          while(index < allTweets.length){
-            var toShow = formatTweet(allTweets[index]);
-            toShow.appendTo($('.tweets'));
-            index += 1;
-          };
-        };
 
         //function for user tweets
-        function showUserTweets (user) {
-          var userTweets = streams.users[user]
+        function showTweets (user) {
+          var tweet;
+          if (user == undefined) {
+            tweet = streams.home;
+          } else {
+            tweet = streams.users[user];
+          }
           $('.tweets').html('');
           var index = 0;
-          while (index < userTweets.length) {
-            var toShow = formatTweet(userTweets[index]);
+          while (index < tweet.length) {
+            var toShow = formatTweet(tweet[index]);
             toShow.appendTo($('.tweets'));
             index += 1
           };
@@ -65,14 +59,14 @@
         //function that displays new tweets on click
         $('.allTweet-button').on('click', function () {
           $('#user-tweet-instructions').html('');
-          showAllTweets();
+          showTweets();
         });
 
         //function displays user specific tweets
         $('.tweets').on('click', '.user', function () {
           $('#user-tweet-instructions').text("Click on the User Name Again to See More")
           var userName = $(this).text().slice(1);
-          showUserTweets(userName);
+          showTweets(userName);
         })
         
 
